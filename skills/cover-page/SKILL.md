@@ -208,6 +208,11 @@ behaviour, and list the page's existing scenarios separately as already covered 
 not rewritten. Widening a targeted request into a whole-page matrix buries the answer the user
 asked for under work they did not ask for.
 
+The approved rows are then **written into the page's existing scenario file**, into its existing
+`describe`, exactly as "Adding to existing coverage" below prescribes. The file unit is the page,
+never the feature: a feature does not get a spec file of its own, or the page's coverage ends up
+scattered across files nobody can audit for completeness.
+
 ### Say which rows become one loop
 
 Rows that differ only in their input and their expected message become **one data-driven loop**
