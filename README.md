@@ -18,20 +18,58 @@ later ones, and a review of six generated files at once is not a review.
 
 ## Install
 
-For everyday use, install it once and the skills are available in any project:
+Two commands, run once. The first registers this repository as a plugin catalogue; the second
+installs the plugin from it.
 
 ```bash
-claude plugin marketplace add <this-repository>
-claude plugin install e2e-forge
+claude plugin marketplace add NinaShevtsova/e2e-forge
 ```
-
-For development on the plugin itself, load it from disk without installing:
 
 ```bash
-claude --plugin-dir ./ai-assistents-for-ui-framework-building
+claude plugin install e2e-forge@nshevtsova-plugins
 ```
 
-After editing a skill, `/reload-plugins` picks up the change without restarting.
+The syntax is `plugin@catalogue`: `e2e-forge` is the plugin, `nshevtsova-plugins` is the catalogue
+declared in `.claude-plugin/marketplace.json`.
+
+Start a new session afterwards and the three skills appear under `/e2e-forge:` — in **any**
+project on the machine, not only in this one. Confirm with:
+
+```bash
+claude plugin list
+```
+
+While this repository is private, installing requires an account with access to it. Ask the owner
+for a collaborator invite, or clone it and install from your own copy.
+
+### Try it without installing
+
+```bash
+claude --plugin-dir .
+```
+
+Loads the plugin for that session only. Useful for trying it before committing to an install, and
+for working on the plugin itself. The flag belongs to `claude`, so it goes **before** any
+subcommand:
+
+```bash
+claude --plugin-dir . plugin details e2e-forge
+```
+
+### Updating
+
+Installed from GitHub, a plugin updates when the repository does:
+
+```bash
+claude plugin marketplace update nshevtsova-plugins
+```
+
+If you registered the catalogue from a local path instead — `claude plugin marketplace add
+./e2e-forge` — the same command re-reads the folder, so edits apply without committing. Convenient
+while developing the plugin; it also means only what you push reaches anyone else.
+
+After editing a skill in an open session, `/reload-plugins` picks up the change without
+restarting.
 
 ## Layout
 
