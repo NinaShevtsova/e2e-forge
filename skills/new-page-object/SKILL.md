@@ -55,7 +55,33 @@ selector — which then arrive with an apparent justification. Where this projec
 what is needed, the model is in `rules/`, not in the folder next door.
 
 **Check whether the page object already exists.** One screen, one class. If a class for this page
-is already there, extend it with the missing methods instead of creating a second one.
+is already there, extend it with the missing methods instead of creating a second one — see the
+next section, which narrows the job considerably.
+
+## Extending an existing page object
+
+Pages change after their class is written: a button appears, a form grows a field. The request
+then names the new element — "the cart page has a new Save for later button" — and the work is an
+extension, not a rebuild.
+
+**The scope narrows to the new element.** Explore it, count its locator (the full step 5 rules
+apply: count before writing, 1 for a single element, on two pages if it will ever prove
+readiness), and add the getter and methods for it, following the same contract as the rest of the
+class.
+
+**Nothing that already exists is touched:**
+
+- existing locators, actions and assertions stay exactly as they are — they may have been edited
+  by hand for reasons not visible here
+- `isLoaded()` is not revisited: the page still is what it was, it merely has one more control
+- fixture registration, the URL map entry and the smoke spec already exist and stay as they are
+
+**The four checks of step 8 still run in full** — typecheck, lint, the forbidden-pattern grep and
+the smoke suite — because an edit to a shared class can break neighbours the new element never
+touches.
+
+**Report what was added**, method by method. The class changed, and whoever reviews the next
+scenario needs to know the page object no longer matches what they last read.
 
 ## 2. Establish what page is wanted
 

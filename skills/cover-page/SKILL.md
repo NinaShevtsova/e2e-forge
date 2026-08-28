@@ -55,6 +55,13 @@ and orchestrates, per `rules/architecture.md` — but the behaviour under test b
 If the page has no page object, stop: run `new-page-object` first. Writing scenarios against
 locators invented here would put selectors in specs, which the architecture forbids.
 
+**The same stop applies when the page object exists but lacks the element a scenario needs** — a
+control added to the page after the class was written. Do not put a locator in a spec, and do not
+extend the class from here: structure is `new-page-object`'s job, with its own exploration,
+locator counting and checks. Stop, name the missing element, and tell the user to run
+`new-page-object` for it first — offering to do so now. Behavioural additions remain in scope:
+step 4 still turns observed messages into named `expect*` assertions on the class.
+
 ### Conventions come from the target project alone
 
 Style is taken from **this project's `CLAUDE.md` and the exemplars named in it** — nothing else.
@@ -194,6 +201,12 @@ whole classes of behaviour:
 **Expect the human to change this table**, and say so when presenting it. The page shows which
 inputs exist; it does not show which failures matter to this business. Cases added by the reviewer
 are not corrections of a mistake — they are the half of the work this skill cannot do.
+
+**When the request names one feature, the matrix covers that feature.** "Cover the Save for later
+button" is not "cover the cart page": propose rows only for the named feature, probe only its
+behaviour, and list the page's existing scenarios separately as already covered — not re-proposed,
+not rewritten. Widening a targeted request into a whole-page matrix buries the answer the user
+asked for under work they did not ask for.
 
 ### Say which rows become one loop
 
