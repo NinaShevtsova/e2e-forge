@@ -1,7 +1,7 @@
 {
   "name": "e2e-forge",
   "description": "Scaffolds and grows Playwright + TypeScript E2E test frameworks. Creates the skeleton from verified templates, discovers the live application rather than guessing at it, and writes page objects and specs to the target project's own conventions.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Nina Shevtsova"
   }
