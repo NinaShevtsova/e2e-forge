@@ -39,9 +39,6 @@ project on the machine, not only in this one. Confirm with:
 claude plugin list
 ```
 
-While this repository is private, installing requires an account with access to it. Ask the owner
-for a collaborator invite, or clone it and install from your own copy.
-
 ### Try it without installing
 
 ```bash
