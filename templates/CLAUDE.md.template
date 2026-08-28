@@ -1,0 +1,127 @@
+# CLAUDE.md
+
+Guidance for Claude Code when working in this repository.
+
+<!--
+ASSEMBLY NOTES — remove this comment block from the generated file.
+
+This is an assembly manifest, not a finished document.
+
+  {{SLOT}}                     replace with a fact about this project
+  <!-- INSERT rules/x.md -->   replace with the body of that rules file
+
+This file stays SHORT — target under 200 lines. It is loaded into context at the
+start of every session, and a long file both consumes context and reduces how
+reliably its instructions are followed. Only what must be present for every task
+belongs here: what the application is, how to run things, the dependency
+direction, where the exemplars are, the ban list, known deviations, and the
+definition of done.
+
+Everything else — the detailed craft rules — is written to `.claude/rules/` in
+the project instead, each file carrying `paths:` frontmatter so it loads only
+when Claude opens a matching file. See the init-framework skill, step 7.
+
+When inlining a rules file here:
+  - drop its top-level heading (this file already provides the section heading)
+  - strip every [invariant] and [default] tag — by generation time each default has
+    become a concrete fact about this project, and the tags are only noise to a reader
+  - drop sentences addressed to the generator rather than to this project: "a project
+    may already name things differently, follow the project", "record its layout in
+    CLAUDE.md", "keep its convention if it already uses X". This project's choices are
+    now facts; state the fact and delete the instruction that led to it
+  - keep every code example and every explanation of WHY a rule exists. A bare rule is
+    followed less reliably than one whose cost of violation is stated. Trim repetition,
+    never reasoning
+  - replace the neutral placeholder examples with real ones taken from this project's
+    own code; a real example carries far more weight than an invented one
+
+The result must be self-contained. Never leave a reference to the generator's
+rules/ in the output: this project will be opened by people who do not have the
+generator installed.
+-->
+
+## What this is
+
+{{PROJECT_DESCRIPTION}}
+
+Application under test: `{{BASE_URL}}`{{APP_STRUCTURE_NOTE}}
+
+Stack: TypeScript + Playwright, Page Object Model with fixture-based dependency injection.
+Browser: Chromium only — the fastest and most stable engine, and the one Playwright's tooling
+targets first. Add another project only when a real requirement calls for cross-browser coverage.
+
+## Commands
+
+{{COMMANDS_TABLE}}
+
+{{KNOWN_BROKEN_SECTION}}
+
+## Architecture
+
+<!-- INSERT rules/architecture.md -->
+
+Actual layout in this project:
+
+{{FOLDER_LAYOUT}}
+
+Test areas in use: {{TEST_AREAS}}
+
+## Golden rule: copy the exemplars
+
+These files define the house style. Before writing new code of a given kind, read the matching
+exemplar and mirror its structure exactly. Reading it also loads the detailed rules for that kind
+of file, which are scoped to the paths below.
+
+{{EXEMPLARS_TABLE}}
+
+## Detailed rules
+
+The craft rules live in `.claude/rules/`, each scoped to the files it governs. They load when you
+open a matching file; read the relevant one before writing:
+
+| File | Governs | Covers |
+|---|---|---|
+| `.claude/rules/page-objects.md` | `src/pages/**` | class contract, `isLoaded()`, method prefixes |
+| `.claude/rules/components.md` | `src/components/**` | scoping, no base class, no `open()` |
+| `.claude/rules/fixtures.md` | `src/fixtures/**` | injection, extending the base fixture, setup |
+| `.claude/rules/specs.md` | `tests/**/*.spec.ts` | titles, `beforeEach`, DRY, data-driven loops |
+| `.claude/rules/locators.md` | pages and components | the CSS ban, priority order, disambiguation |
+| `.claude/rules/assertions.md` | pages, components, specs | web-first matchers, no manual waiting |
+| `.claude/rules/isolation.md` | specs and fixtures | parallel safety, unique data |
+| `.claude/rules/conventions.md` | all TypeScript | imports, naming, JSDoc, no hard-coding |
+
+{{TEST_ID_NOTE}}
+
+## Deviations: debt, breakage and application bugs
+
+Every deviation from the rules above is written down here. An undocumented deviation causes one of
+two failures: the assistant treats it as the house style and multiplies it, or decides it is a
+defect it just introduced and starts repairing working code instead of doing the task.
+
+Four kinds belong here: **broken commands** (with the actual error, and a note that it predates
+the current work), **legacy code violating a rule** (by path, labelled *debt, not examples*),
+**application bugs** (the test stays, marked expected-to-fail with the reason — never deleted,
+never weakened), and **exemplar exceptions** (which part of a named exemplar to copy and which to
+ignore).
+
+An expected-failure marker is only for a confirmed product defect. A merely unstable test is never
+marked this way — flakiness is investigated. Entries are removed when fixed, not left to rot.
+
+### Currently recorded
+
+{{DEVIATIONS_LIST}}
+
+## Forbidden
+
+<!-- INSERT rules/forbidden.md -->
+
+## Definition of done
+
+Before reporting a change complete:
+
+1. Run the affected spec: `{{TEST_COMMAND}} <file>` — it must pass.
+2. Run `{{TYPECHECK_COMMAND}}` and the linter — both must pass.
+3. For a new page object, confirm it is registered in a fixture and reachable from a spec.
+4. Re-check the Forbidden list against the diff.
+5. State honestly which tests were run and the result. If something still fails, name the test and
+   the reason rather than describing the work as finished.

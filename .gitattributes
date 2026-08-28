@@ -1,0 +1,2 @@
+# Normalise line endings: the plugin is read on macOS and Linux too
+* text=auto eol=lf

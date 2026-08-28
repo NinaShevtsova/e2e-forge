@@ -1,0 +1,10 @@
+node_modules/
+reports/
+playwright-report/
+test-results/
+allure-results/
+
+.env
+.env.local
+
+*.log
