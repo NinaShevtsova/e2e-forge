@@ -1,0 +1,16 @@
+{
+  "name": "nshevtsova-plugins",
+  "description": "Test-automation tooling for Claude Code.",
+  "owner": {
+    "name": "Nina Shevtsova"
+  },
+  "plugins": [
+    {
+      "name": "e2e-forge",
+      "source": "./",
+      "description": "Scaffolds and grows Playwright + TypeScript E2E test frameworks. Creates the skeleton from verified templates, discovers the live application rather than guessing at it, and writes page objects and specs to the target project's own conventions.",
+      "category": "testing",
+      "keywords": ["playwright", "typescript", "e2e", "test-automation", "page-object"]
+    }
+  ]
+}
